@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Slide Navbar</title>
+	<link rel="stylesheet" type="text/css" href="LoginD.css">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+</head>
+
+	
+  
+  
+<body>
+	
+		
+	
+	<div class="main"> 
+		<nav class="page__menu menu">
+			<ul class="menu__list r-list">
+			  <li class="menu__group"><a href="#0" class="menu__link r-link text-underlined">Discover</a></li>
+			  <li class="menu__group"><a href="#0" class="menu__link r-link text-underlined">Fridge</a></li>
+			  <li class="menu__group"><a href="#0" class="menu__link r-link text-underlined">Cookbook</a></li>
+			  <li class="menu__group"><a href="#0" class="menu__link r-link text-underlined">User Profile</a></li>
+			</ul>
+		  </nav> 
+			
+		<input type="checkbox" id="chk" aria-hidden="true">
+
+			<div class="signup">
+				<form>
+					<label for="chk" aria-hidden="true">Sign up</label>
+					<input type="text" id=username name="txt" placeholder="User name" required="">
+					<input type="email" id=email name="email" placeholder="Email" required="">
+					<input type="password" id=password name="pswd" placeholder="Password" required="">
+					<button>Sign up</button>
+
+					<!--input type="submit" id='signUp' name="signup_submit" value="Sign up"/-->
+				</form>
+			</div>
+
+			<div class="login">
+				<form>
+					<label for="chk" aria-hidden="true">Login</label>
+					<input type="email" id="email" name="email" placeholder="Email" required="">
+					<input type="password" id="password" name="pswd" placeholder="Password" required="">
+					<button>Login</button>
+				</form>
+			</div>
+	</div>
+</body>
+
+<script type="module">
+	// Import the functions you need from the SDKs you need
+	import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-app.js";
+
+	import {getDatabase,set,ref} from "https://www.gstatic.com/firebasejs/9.8.4/firebase-database.js";
+
+	import {getAuth, createUsersWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/9.8.4/firebase-auth.js";
+	// TODO: Add SDKs for Firebase products that you want to use
+	// https://firebase.google.com/docs/web/setup#available-libraries
+  
+	// Your web app's Firebase configuration
+	const firebaseConfig = {
+	  apiKey: "AIzaSyCikaP861ESOh0FPIlC4gIWlhGgSYJmCuc",
+	  authDomain: "fir-auo-recipease.firebaseapp.com",
+	  databaseURL: "https://fir-auo-recipease-default-rtdb.firebaseio.com",
+	  projectId: "fir-auo-recipease",
+	  storageBucket: "fir-auo-recipease.appspot.com",
+	  messagingSenderId: "908542591304",
+	  appId: "1:908542591304:web:54e8d0f5ddf9ec2646b37d"
+	};
+  
+	// Initialize Firebase
+	const app = initializeApp(firebaseConfig);
+	const database = getDatabase(app);
+	const auth= getAuth();
+
+	signUp,addEventListener('click', (e)=>{
+		var email=document.getElementById('email').value;
+		var password=document.getElementById('password').value;
+		var username=document.getElementById('username').value;
+
+
+
+
+		createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+
+	set(ref(database,'users/'+user.uid),{
+		username:username,
+		email:email,
+		
+	} )
+	alert('user created');
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+
+	alert('errorMessage');
+    // ..
+  });
+		
+	})
+  </script>
+</html>
